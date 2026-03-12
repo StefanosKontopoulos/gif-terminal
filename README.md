@@ -67,7 +67,21 @@ Edit your chosen theme script and update:
 USERNAME = "your-username-here"
 ```
 
-### 4. (Liquid Glass only) Add your wallpaper
+### 4. Choose your theme
+
+Edit `.github/workflows/generate-gif.yml` and set the script you want to use:
+
+```yaml
+# Default dark theme
+run: python generate_with_stats.py
+
+# macOS Liquid Glass theme
+run: python generate_liquid_glass.py
+```
+
+> The workflow in `.github/workflows/generate-gif.yml` is the one that runs automatically on GitHub Actions. Make sure it points to the script for your chosen theme.
+
+### 5. (Liquid Glass only) Add your wallpaper
 
 Place a `.jpg` image at:
 
@@ -75,13 +89,15 @@ Place a `.jpg` image at:
 assets/wallpaper.jpg
 ```
 
-### 5. Add to your profile README
+### 6. Add to your profile README
 
 ```markdown
 ![Terminal GIF](https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/main/output.gif)
 ```
 
 The GIF will be automatically regenerated every day at **6:00 AM UTC**.
+
+> **Tip:** you can also trigger it manually anytime via **Actions → Generate Terminal GIF → Run workflow**.
 
 ---
 
