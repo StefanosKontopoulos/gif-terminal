@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🖥️ Terminal GIF for GitHub Profile
+# Terminal GIF for GitHub Profile
 
 **An animated terminal GIF showcasing your GitHub stats — auto-generated daily.**
 
@@ -14,36 +14,27 @@
 
 ---
 
-## ✨ Features
+## Features
 
-- 📊 Fetches **real-time GitHub stats** (commits, stars, PRs, followers, rank, and more)
-- 🎨 **Two themes** — classic dark terminal or macOS Liquid Glass
-- ⚙️ **Auto-regenerated daily** via GitHub Actions
-- 🚀 Easy to set up — fork, configure, and you're done
-
----
-
-## 🎨 Themes
-
-### Default — Classic dark terminal
-The original theme: a clean dark terminal with ANSI colors.
-
-```bash
-python generate_with_stats.py
-```
-
-### Liquid Glass — macOS-style frosted glass
-A translucent macOS-style window floating over your custom wallpaper, with vivid text colors and traffic light buttons.
-
-```bash
-python generate_liquid_glass.py
-```
-
-> Place your wallpaper at `assets/wallpaper.jpg` before running.
+- Fetches **real-time GitHub stats** (commits, stars, PRs, followers, rank, languages)
+- **Three themes** — classic terminal, macOS Liquid Glass, or Debian GNOME
+- **Username auto-detected** — no code editing needed after forking
+- **Auto-regenerated daily** via GitHub Actions
+- Easy to set up: fork → configure two settings → done
 
 ---
 
-## 🚀 Quick Start
+## Themes
+
+| Value | Theme | Description |
+|-------|-------|-------------|
+| `macos` | **macOS Liquid Glass** *(default)* | Frosted glass terminal floating over a macOS wallpaper, with traffic-light buttons |
+| `debian` | **Debian GNOME** | Classic GNOME 2 terminal with title bar, menu bar, and Tango colors over the Debian wallpaper |
+| `default` | **Classic dark** | Clean dark terminal, no wallpaper |
+
+---
+
+## Quick Start (fork & use)
 
 ### 1. Fork this repository
 
@@ -51,57 +42,46 @@ Click the **Fork** button at the top right of this page.
 
 ### 2. Add your GitHub Token
 
-Go to **Settings → Secrets and variables → Actions** and create a new secret:
+Go to **Settings → Secrets and variables → Actions** and add a new **secret**:
 
 | Name | Value |
 |------|-------|
-| `GH_TOKEN` | Your GitHub Personal Access Token (`read:user` scope) |
+| `GH_TOKEN` | Your GitHub Personal Access Token |
 
-> 💡 Generate a token at [github.com/settings/tokens](https://github.com/settings/tokens) — only `read:user` permission is needed.
+> Generate a token at [github.com/settings/tokens](https://github.com/settings/tokens) — only the `read:user` scope is needed.
 
-### 3. Set your username
+### 3. Choose your theme
 
-Edit your chosen theme script and update:
+Go to **Settings → Secrets and variables → Actions → Variables** and add a new **variable**:
 
-```python
-USERNAME = "your-username-here"
-```
+| Name | Value |
+|------|-------|
+| `THEME` | `macos` or `debian` or `default` |
 
-### 4. Choose your theme
+> If you skip this step the `macos` theme is used by default.
 
-Edit `.github/workflows/generate-gif.yml` and set the script you want to use:
+### 4. (macOS / Debian themes) Add your wallpaper
 
-```yaml
-# Default dark theme
-run: python generate_with_stats.py
+| Theme | File to replace |
+|-------|----------------|
+| `macos` | `assets/macos_wallpaper.jpg` |
+| `debian` | `assets/debian_wallpaper.png` |
 
-# macOS Liquid Glass theme
-run: python generate_liquid_glass.py
-```
+Replace the file in `assets/` with your own image. Any resolution works — it will be cropped to fit automatically.
 
-> The workflow in `.github/workflows/generate-gif.yml` is the one that runs automatically on GitHub Actions. Make sure it points to the script for your chosen theme.
+### 5. Trigger the first run
 
-### 5. (Liquid Glass only) Add your wallpaper
-
-Place a `.jpg` image at:
-
-```
-assets/wallpaper.jpg
-```
+Go to **Actions → Generate Terminal GIF → Run workflow** to generate your first GIF immediately, or wait for the daily schedule (06:00 UTC).
 
 ### 6. Add to your profile README
 
 ```markdown
-![Terminal GIF](https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/main/output.gif)
+![Terminal GIF](https://raw.githubusercontent.com/YOUR_USERNAME/gif-terminal/main/output.gif)
 ```
-
-The GIF will be automatically regenerated every day at **6:00 AM UTC**.
-
-> **Tip:** you can also trigger it manually anytime via **Actions → Generate Terminal GIF → Run workflow**.
 
 ---
 
-## 💻 Running Locally
+## Running Locally
 
 ### Install dependencies
 
@@ -111,82 +91,91 @@ pip install github-readme-terminal requests python-dotenv Pillow
 # Install ffmpeg (macOS)
 brew install ffmpeg
 
-# Install ffmpeg (Ubuntu/Debian)
+# Install ffmpeg (Ubuntu / Debian)
 sudo apt install ffmpeg
 ```
 
-### Configure your GitHub Token
+> **No ffmpeg?** The scripts include a PIL fallback — the GIF will still be generated.
 
-Create a `.env` file in the project root:
+### Configure your GitHub Token
 
 ```bash
 cp .env.example .env
-```
-
-Then edit `.env` and add:
-
-```env
-GITHUB_TOKEN=your_github_token_here
+# Edit .env and set GITHUB_TOKEN=your_token_here
 ```
 
 ### Generate the GIF
 
 ```bash
-# Default theme
-python generate_with_stats.py
-
-# Liquid Glass theme
+# macOS Liquid Glass theme
 python generate_liquid_glass.py
+
+# Debian GNOME theme
+python generate_debian.py
+
+# Classic dark theme
+python generate_with_stats.py
 ```
 
-The output will be saved as `output.gif`.
+The output is saved as `output.gif`.
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 .
-├── generate_with_stats.py        # Default dark theme
-├── generate_liquid_glass.py      # Liquid Glass macOS theme
+├── generate_liquid_glass.py      # macOS Liquid Glass theme
+├── generate_debian.py            # Debian GNOME theme
+├── generate_with_stats.py        # Classic dark theme
 ├── assets/
-│   └── wallpaper.jpg             # Wallpaper for Liquid Glass theme
-├── output.gif                    # Generated GIF (auto-updated)
+│   ├── macos_wallpaper.jpg       # Wallpaper for macOS theme
+│   └── debian_wallpaper.png      # Wallpaper for Debian theme
+├── output.gif                    # Generated GIF (auto-updated by CI)
 ├── .env.example                  # Environment variable template
-├── .github/
-│   └── workflows/
-│       ├── generate-gif.yml               # CI — default theme
-│       └── generate-gif-liquid-glass.yml  # CI — Liquid Glass theme
-└── README.md
+└── .github/
+    └── workflows/
+        └── generate-gif.yml      # Unified CI workflow (theme selected via THEME variable)
 ```
 
 ---
 
-## 🎨 Customization
+## Customization
 
-### Default theme (`generate_with_stats.py`)
-- **Skills section** — update the `skills` list with your own tech stack
-- **Colors** — use ANSI escape codes to change text colors
-- **Commands** — add or remove terminal commands and sections
-- **Layout** — adjust width, height, padding, and typing speed
+### Username
+The username is **automatically detected** from your GitHub account — no code changes needed.
+When running locally, you can override it with:
+```bash
+GIT_USERNAME=your-username python generate_liquid_glass.py
+```
 
-### Liquid Glass theme (`generate_liquid_glass.py`)
-- **Wallpaper** — replace `assets/wallpaper.jpg` with any image
-- **Glass opacity** — tune `GaussianBlur` radius and overlay alpha in `prepare_glass_layers()`
-- **Text colors** — edit the `ConvertAnsiEscape.ANSI_ESCAPE_MAP_TXT_COLOR` override at the top
-- **Window layout** — adjust `GIF_W`, `GIF_H`, `WIN_X`, `WIN_Y`, `TITLE_H` constants
+### Skills and content
+All three scripts share the same `skills` list and stats sections. Edit whichever script you use.
+
+### Theme-specific settings
+
+**macOS Liquid Glass** (`generate_liquid_glass.py`)
+- Wallpaper → replace `assets/macos_wallpaper.jpg`
+- Glass opacity → `frosted_title` / `frosted_content` overlay alpha in `prepare_glass_layers()`
+- Text colors → `ConvertAnsiEscape.ANSI_ESCAPE_MAP_TXT_COLOR` at the top of the file
+
+**Debian GNOME** (`generate_debian.py`)
+- Wallpaper → replace `assets/debian_wallpaper.png`
+- Glass darkness → `tint_rgba` values in `prepare_debian_layers()`
+- Text colors → `ConvertAnsiEscape.ANSI_ESCAPE_MAP_TXT_COLOR` at the top of the file
+- Window layout → `TITLE_H`, `MENU_H`, `CORNER_RADIUS` constants
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-Contributions, issues, and feature requests are welcome!
+Contributions, issues, and feature requests are welcome.
 Feel free to open an [issue](../../issues) or submit a pull request.
 
 ---
 
 <div align="center">
 
-If this project helped you, consider leaving a ⭐ — it means a lot!
+If this project helped you, consider leaving a ⭐
 
 </div>

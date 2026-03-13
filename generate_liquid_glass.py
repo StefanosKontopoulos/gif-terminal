@@ -43,7 +43,12 @@ ConvertAnsiEscape.ANSI_ESCAPE_MAP_TXT_COLOR.update({
 #   - macOS chrome (rounded border, shadow, traffic lights) is drawn on top
 # ============================================
 
-USERNAME = "dbuzatto"
+# Auto-detected from GitHub Actions context; falls back to env var or default.
+USERNAME = (
+    os.environ.get("GITHUB_REPOSITORY_OWNER")
+    or os.environ.get("GIT_USERNAME")
+    or "dbuzatto"
+)
 
 # ---- Layout constants ----
 GIF_W, GIF_H     = 740, 520   # full canvas including margin
@@ -347,7 +352,7 @@ t.clone_frame(40)
 # Post-process frames → Liquid Glass effect
 # ============================================
 
-base_canvas, chrome = prepare_glass_layers("assets/wallpaper.jpg")
+base_canvas, chrome = prepare_glass_layers("assets/macos_wallpaper.jpg")
 post_process_frames(base_canvas, chrome)
 
 # ============================================

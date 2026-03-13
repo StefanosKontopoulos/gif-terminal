@@ -18,7 +18,12 @@ import requests
 # - Copy the token and add it to .env
 # ============================================
 
-USERNAME = "dbuzatto"  # <- Your GitHub username
+# Auto-detected from GitHub Actions context; falls back to env var or default.
+USERNAME = (
+    os.environ.get("GITHUB_REPOSITORY_OWNER")
+    or os.environ.get("GIT_USERNAME")
+    or "dbuzatto"
+)
 
 # Function to fetch real number of repos
 def get_total_repos(username):
