@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       theme:
-        description: 'Theme to use (macos | debian | default)'
+        description: 'Theme to use (default | macos | debian)'
         required: false
-        default: 'macos'
+        default: 'default'
   push:
     branches:
       - main
@@ -43,10 +43,10 @@ jobs:
           # Automatically injected by GitHub — scripts use this to detect the username.
           # No manual changes needed when forking.
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-          # Select theme via repository variable: Settings → Variables → Actions → THEME
-          # Valid values: macos | debian | default   (default: macos)
+          # Select theme via repository variable: Settings → Secrets and variables → Actions → Variables tab → THEME
+          # Valid values: default | macos | debian   (fallback: default)
           # Manual runs (workflow_dispatch) can also pass a theme via the input above.
-          THEME: ${{ vars.THEME || inputs.theme || 'macos' }}
+          THEME: ${{ vars.THEME || inputs.theme || 'default' }}
         run: |
           echo "Theme: $THEME  |  User: $GITHUB_REPOSITORY_OWNER"
           case "$THEME" in

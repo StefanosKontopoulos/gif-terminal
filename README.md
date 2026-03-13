@@ -28,9 +28,9 @@
 
 | Value | Theme | Description |
 |-------|-------|-------------|
-| `macos` | **macOS Liquid Glass** *(default)* | Frosted glass terminal floating over a macOS wallpaper, with traffic-light buttons |
+| `default` | **Classic dark** *(default)* | Clean dark terminal, no wallpaper |
+| `macos` | **macOS Liquid Glass** | Frosted glass terminal floating over a macOS wallpaper, with traffic-light buttons |
 | `debian` | **Debian GNOME** | Classic GNOME 2 terminal with title bar, menu bar, and Tango colors over the Debian wallpaper |
-| `default` | **Classic dark** | Clean dark terminal, no wallpaper |
 
 ---
 
@@ -52,13 +52,13 @@ Go to **Settings → Secrets and variables → Actions** and add a new **secret*
 
 ### 3. Choose your theme
 
-Go to **Settings → Secrets and variables → Actions → Variables** and add a new **variable**:
+Go to **Settings → Secrets and variables → Actions**, open the **Variables** tab and click **New repository variable**:
 
 | Name | Value |
 |------|-------|
 | `THEME` | `macos` or `debian` or `default` |
 
-> If you skip this step the `macos` theme is used by default.
+> If you skip this step the `default` theme (classic dark terminal, no wallpaper) is used.
 
 ### 4. (macOS / Debian themes) Add your wallpaper
 
