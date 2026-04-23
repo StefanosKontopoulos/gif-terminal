@@ -369,7 +369,7 @@ t.clone_frame(5)
 
 t.gen_text("", row_num=4)
 t.gen_text(f"\x1b[96m=== GitHub Stats for {USERNAME} ===\x1b[0m", row_num=5)
-t.clone_frame(3)
+t.clone_frame(8)
 
 if has_stats:
     repos_count = total_repos if total_repos else github_stats.total_repo_contributions
@@ -401,7 +401,7 @@ else:
 
 for i, line in enumerate(stats_lines):
     t.gen_text(line, row_num=6 + i)
-    t.clone_frame(3)
+    t.clone_frame(8)
 
 t.clone_frame(10)
 t.gen_text("\x1b[96m================================\x1b[0m", row_num=6 + len(stats_lines))
@@ -419,7 +419,7 @@ t.clone_frame(5)
 
 t.gen_text("", row_num=2)
 t.gen_text("\x1b[96m=== Tech Stack ===\x1b[0m", row_num=3)
-t.clone_frame(3)
+t.clone_frame(8)
 
 skills = [
     ("\x1b[94mCloud:\x1b[0m       ", "AWS, GCP, OCI, Cloudflare"),
@@ -433,7 +433,7 @@ skills = [
 
 for i, (label, value) in enumerate(skills):
     t.gen_text(f"{label}{value}", row_num=4 + i)
-    t.clone_frame(2)
+    t.clone_frame(6)
 
 t.clone_frame(10)
 t.gen_text("\x1b[96m==================\x1b[0m", row_num=4 + len(skills))
@@ -446,7 +446,7 @@ t.gen_typing_text(
 )
 t.clone_frame(5)
 t.gen_text("\x1b[92mThanks for visiting my profile!\x1b[0m", row_num=final_row + 1)
-t.clone_frame(40)
+t.clone_frame(80)
 
 # ============================================
 # Post-process frames → Debian theme
